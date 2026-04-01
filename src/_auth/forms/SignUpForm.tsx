@@ -11,8 +11,10 @@ import {
 import { Input } from "../../components/ui/input";
 import { SignUpValidationSchema } from "../../lib/validation";
 import { Button } from "../../components/ui/button";
+import Loader from "../../components/ui/shared/Loader";
 
 const SignUpForm = () => {
+  const isLoading = false;
   //! what does useForm do?
   // useForm isto manage the sate, validation and submission of a form.
   // it returns an object with methods and properties to manage the form. like register, handleSubmit, formState.
@@ -39,9 +41,7 @@ const SignUpForm = () => {
     <>
       <div className="flex flex-col items-center px-4 w-full sm:w-[420px]">
         <img src="/images/logo.svg" alt="logo" className="mb-4 w-32 h-32" />
-        <h2 className="pt-5 sm:pt-12 h3-bold md:h2bold">
-          Create a new account
-        </h2>
+        <h2 className="pt-4 h3-bold md:h2bold">Create a new account</h2>
 
         <p className="pt-2 text-light-3 small-medium md:base-regular">
           Join our community today!
@@ -49,40 +49,43 @@ const SignUpForm = () => {
 
         <FieldSet className="w-full max-w-xs">
           <FieldGroup className="flex flex-col gap-5 mt-4 w-full">
+            {/*  Name */}
             <Field>
               <FieldLabel htmlFor="name">Name</FieldLabel>
-              <FieldDescription>Enter your name.</FieldDescription>
-              <Input id="name" type="text" placeholder="Max" />
+
+              <Input id="name" type="text" placeholder="Mark" />
             </Field>
+            {/*  Username */}
             <Field>
               <FieldLabel htmlFor="username">Username</FieldLabel>
-              <FieldDescription>
-                Choose a unique username for your account.
-              </FieldDescription>
-              <Input id="username" type="text" placeholder="Max_920" />
+
+              <Input id="username" type="text" placeholder="Mark_920" />
             </Field>
+            {/*  Email */}
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <FieldDescription>Enter your email address.</FieldDescription>
-              <Input id="email" type="email" placeholder="max@example.com" />
+
+              <Input id="email" type="email" placeholder="mark@example.com" />
             </Field>
+            {/*  Password */}
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
               <FieldDescription>
                 Must be at least 8 characters long.
               </FieldDescription>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                className="shad-input"
-              />
+              <Input id="password" type="password" placeholder="" />
             </Field>
             <Button
               type="submit"
               className="hover:bg-primary-500/80 w-full cursor-pointer shad-button_primary"
             >
-              Sign Up
+              {isLoading ? (
+                <div className="flex-center gap-2">
+                  <Loader /> Loading...
+                </div>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
           </FieldGroup>
         </FieldSet>
