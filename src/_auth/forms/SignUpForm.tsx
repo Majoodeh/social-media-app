@@ -12,7 +12,7 @@ import { Input } from "../../components/ui/input";
 import { SignUpValidationSchema } from "../../lib/validation";
 import { Button } from "../../components/ui/button";
 import Loader from "../../components/ui/shared/Loader";
-
+import { Link } from "react-router-dom";
 const SignUpForm = () => {
   const isLoading = false;
   //! what does useForm do?
@@ -37,6 +37,11 @@ const SignUpForm = () => {
     },
   });
 
+  function onSubmit(values: z.infer<typeof SignUpValidationSchema>) {
+    // this function will be called when the form is submitted and the values are valid.
+    // we can use the values to send a request to the server to create a new user account.
+    console.log(values);
+  }
   return (
     <>
       <div className="flex flex-col items-center px-4 w-full sm:w-[420px]">
@@ -46,49 +51,62 @@ const SignUpForm = () => {
         <p className="pt-2 text-light-3 small-medium md:base-regular">
           Join our community today!
         </p>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col items-center w-full"
+        >
+          <FieldSet className="w-full max-w-xs">
+            <FieldGroup className="flex flex-col gap-5 mt-4 w-full">
+              {/*  Name */}
+              <Field>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
 
-        <FieldSet className="w-full max-w-xs">
-          <FieldGroup className="flex flex-col gap-5 mt-4 w-full">
-            {/*  Name */}
-            <Field>
-              <FieldLabel htmlFor="name">Name</FieldLabel>
+                <Input id="name" type="text" placeholder="Mark" />
+              </Field>
+              {/*  Username */}
+              <Field>
+                <FieldLabel htmlFor="username">Username</FieldLabel>
 
-              <Input id="name" type="text" placeholder="Mark" />
-            </Field>
-            {/*  Username */}
-            <Field>
-              <FieldLabel htmlFor="username">Username</FieldLabel>
+                <Input id="username" type="text" placeholder="Mark_920" />
+              </Field>
+              {/*  Email */}
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
 
-              <Input id="username" type="text" placeholder="Mark_920" />
-            </Field>
-            {/*  Email */}
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-
-              <Input id="email" type="email" placeholder="mark@example.com" />
-            </Field>
-            {/*  Password */}
-            <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-              <FieldDescription>
-                Must be at least 8 characters long.
-              </FieldDescription>
-              <Input id="password" type="password" placeholder="" />
-            </Field>
-            <Button
-              type="submit"
-              className="hover:bg-primary-500/80 w-full cursor-pointer shad-button_primary"
-            >
-              {isLoading ? (
-                <div className="flex-center gap-2">
-                  <Loader /> Loading...
-                </div>
-              ) : (
-                "Sign Up"
-              )}
-            </Button>
-          </FieldGroup>
-        </FieldSet>
+                <Input id="email" type="email" placeholder="mark@example.com" />
+              </Field>
+              {/*  Password */}
+              <Field>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <FieldDescription>
+                  Must be at least 8 characters long.
+                </FieldDescription>
+                <Input id="password" type="password" placeholder="" />
+              </Field>
+              <Button
+                type="submit"
+                className="hover:bg-primary-500/80 w-full cursor-pointer shad-button_primary"
+              >
+                {isLoading ? (
+                  <div className="flex-center gap-2">
+                    <Loader /> Loading...
+                  </div>
+                ) : (
+                  "Sign Up"
+                )}
+              </Button>
+              <p className="text-light-3 text-center small-medium md:base-regular">
+                Already have an account?{" "}
+                <Link
+                  to="sign-in"
+                  className="ml-1 text-primary-500 text-small-semibold"
+                >
+                  Log in
+                </Link>
+              </p>
+            </FieldGroup>
+          </FieldSet>
+        </form>
       </div>
     </>
   );
