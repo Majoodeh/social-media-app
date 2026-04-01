@@ -1,6 +1,6 @@
 export { default as Home } from "./Home";
 
-// Why is that file for?
+//! Why is that file for?
 // THis file is used to export all the pages in the application. This way, we can import them from a single file instead of importing them from their respective files.
 // so instead of:
 // import Home from "./Home";

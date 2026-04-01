@@ -8,7 +8,7 @@ import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <main className="flex h-screen">
+    <main className="flex w-screen h-screen overflow-hidden">
       <Routes>
         {/* Public Routes */}
 
