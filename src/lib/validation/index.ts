@@ -8,8 +8,11 @@ export const SignUpValidationSchema = z.object({
     .string()
     .min(2, { message: "Name must be at least 2 characters long" })
     .max(50, { message: "Name must be less than 50 characters long" }),
-  username: z.string().min(2).max(20),
-  email: z.string().email(),
+  username: z
+    .string()
+    .min(2, { message: "Username must be at least 2 characters long" })
+    .max(20, { message: "Username must be less than 20 characters long" }),
+  email: z.string().email({ message: `Invalid email address` }),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })

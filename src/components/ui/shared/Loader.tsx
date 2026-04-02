@@ -1,14 +1,10 @@
 import React from "react";
+import LoaderIcon from "@/assets/icons/loader.svg";
 
 const Loader = () => {
   return (
     <div className="flex-center w-full">
-      <img
-        src="src/assets/icons/loader.svg"
-        alt="loader"
-        width={24}
-        height={24}
-      />
+      <img src={LoaderIcon} alt="loader" width={24} height={24} />
     </div>
   );
 };

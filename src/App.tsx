@@ -8,14 +8,12 @@ import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <main className="flex w-screen h-screen overflow-hidden">
+    <main className="flex w-screen">
       <Routes>
         {/* Public Routes */}
 
         <Route element={<AuthLayout />}>
-          {
-            " // This is the layout for the authentication pages, it will be used to wrap the SignIn and SignUp pages. "
-          }
+          {/* This is the layout for the authentication pages, it will be used to wrap the SignIn and SignUp pages */}
 
           <Route path="/sign-in" element={<SignInForm />} />
           <Route path="/sign-up" element={<SignUpForm />} />

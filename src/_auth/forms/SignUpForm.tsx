@@ -7,12 +7,14 @@ import {
   FieldGroup,
   FieldLabel,
   FieldSet,
+  FieldError,
 } from "../../components/ui/field";
 import { Input } from "../../components/ui/input";
-import { SignUpValidationSchema } from "../../lib/validation";
+import { SignUpValidationSchema } from "../../lib/validation/index";
 import { Button } from "../../components/ui/button";
 import Loader from "../../components/ui/shared/Loader";
 import { Link } from "react-router-dom";
+import { createUserAccount } from "@/lib/appwrite/api";
 const SignUpForm = () => {
   const isLoading = false;
   //! what does useForm do?
@@ -37,11 +39,12 @@ const SignUpForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof SignUpValidationSchema>) {
-    // this function will be called when the form is submitted and the values are valid.
-    // we can use the values to send a request to the server to create a new user account.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignUpValidationSchema>) {
+    const newUser = await createUserAccount(values);
+    console.log(newUser);
   }
+  console.log(form.formState.errors);
+
   return (
     <>
       <div className="flex flex-col items-center px-4 w-full sm:w-[420px]">
@@ -61,19 +64,43 @@ const SignUpForm = () => {
               <Field>
                 <FieldLabel htmlFor="name">Name</FieldLabel>
 
-                <Input id="name" type="text" placeholder="Mark" />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Mark"
+                  {...form.register("name")}
+                />
+                <FieldError className="text-red-600 text-sm transition-all duration-300 ease-in-out">
+                  {form.formState.errors.name?.message}
+                </FieldError>
               </Field>
               {/*  Username */}
               <Field>
                 <FieldLabel htmlFor="username">Username</FieldLabel>
 
-                <Input id="username" type="text" placeholder="Mark_920" />
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="Mark_920"
+                  {...form.register("username")}
+                />
+                <FieldError className="text-red-600 text-sm transition-all duration-300 ease-in-out">
+                  {form.formState.errors.username?.message}
+                </FieldError>
               </Field>
               {/*  Email */}
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
 
-                <Input id="email" type="email" placeholder="mark@example.com" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="mark@example.com"
+                  {...form.register("email")}
+                />
+                <FieldError className="text-red-600 text-sm transition-all duration-300 ease-in-out">
+                  {form.formState.errors.email?.message}
+                </FieldError>
               </Field>
               {/*  Password */}
               <Field>
@@ -81,7 +108,15 @@ const SignUpForm = () => {
                 <FieldDescription>
                   Must be at least 8 characters long.
                 </FieldDescription>
-                <Input id="password" type="password" placeholder="" />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder=""
+                  {...form.register("password")}
+                />
+                <FieldError className="text-red-600 text-sm transition-all duration-300 ease-in-out">
+                  {form.formState.errors.password?.message}
+                </FieldError>
               </Field>
               <Button
                 type="submit"
@@ -96,9 +131,9 @@ const SignUpForm = () => {
                 )}
               </Button>
               <p className="text-light-3 text-center small-medium md:base-regular">
-                Already have an account?{" "}
+                Already have an account?
                 <Link
-                  to="sign-in"
+                  to="/sign-in"
                   className="ml-1 text-primary-500 text-small-semibold"
                 >
                   Log in
